@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 const { app, BrowserWindow, ipcMain, dialog, shell, Tray, Menu, globalShortcut, nativeImage } = require('electron');
 const path = require('path');
@@ -272,6 +272,18 @@ function publicState() {
 /* 导入 / 图标                                                          */
 /* ------------------------------------------------------------------ */
 
+/* 面板自身不可添加到面板中（按精确路径或已知产品 exe 名判断） */
+const SELF_EXE_NAMES = new Set(['softwaretoolspanel.exe', '软件集合面板.exe']);
+
+function isSelf(p) {
+  if (!p) return false;
+  const s = String(p);
+  try {
+    if (path.resolve(s).toLowerCase() === path.resolve(process.execPath).toLowerCase()) return true;
+  } catch (_) { /* 非法路径忽略 */ }
+  return SELF_EXE_NAMES.has(path.basename(s).toLowerCase());
+}
+
 async function buildAppFromFile(file, opts = {}) {
   const info = library.describeFile(file);
   const entry = store.addApp({
@@ -420,6 +432,10 @@ function registerIpc() {
         continue;
       }
       const info = library.describeFile(p);
+      if (isSelf(p) || isSelf(info.target)) {
+        skipped.push({ path: raw, reason: '不能把面板自身添加到面板中' });
+        continue;
+      }
       const dup = duplicateOf(info.target) || duplicateOf(p);
       if (dup) {
         skipped.push({ path: raw, reason: `已存在：${dup.name}` });
@@ -440,16 +456,19 @@ function registerIpc() {
       existing.add(String(a.target || '').toLowerCase());
       existing.add(String(a.path || '').toLowerCase());
     }
-    return list.map((item) => ({
-      ...item,
-      exists: existing.has(String(item.target).toLowerCase()) || existing.has(String(item.path).toLowerCase())
-    }));
+    return list
+      .filter((item) => !isSelf(item.target) && !isSelf(item.path))
+      .map((item) => ({
+        ...item,
+        exists: existing.has(String(item.target).toLowerCase()) || existing.has(String(item.path).toLowerCase())
+      }));
   });
 
   ipcMain.handle('app:import', async (_e, { items = [], groupId } = {}) => {
     const added = [];
     for (const item of items) {
       if (!item || !item.path) continue;
+      if (isSelf(item.target) || isSelf(item.path)) continue;
       if (duplicateOf(item.target) || duplicateOf(item.path)) continue;
       const entry = store.addApp({
         name: item.name,

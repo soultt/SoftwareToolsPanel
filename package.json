@@ -10,7 +10,8 @@
     "start": "electron .",
     "dev": "electron . --dev",
     "icon": "node tools/gen-icon.js",
-    "dist": "node tools/build.js"
+    "dist": "node tools/build.js",
+    "dist:portable": "node tools/build.js --portable-only"
   },
   "devDependencies": {
     "@electron/packager": "^20.3.0",
