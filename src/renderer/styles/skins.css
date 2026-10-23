@@ -1,0 +1,305 @@
+/* ============================================================
+   皮肤定义 —— 每套皮肤只描述变量，界面结构完全复用
+   ============================================================ */
+
+:root {
+  --font: "Segoe UI Variable Display", "Segoe UI", "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+  --mono: "Cascadia Code", "Cascadia Mono", Consolas, monospace;
+
+  --radius-lg: 20px;
+  --radius: 14px;
+  --radius-sm: 10px;
+
+  --accent-soft: color-mix(in srgb, var(--accent) 15%, transparent);
+  --accent-line: color-mix(in srgb, var(--accent) 40%, transparent);
+  --accent-glow: color-mix(in srgb, var(--accent) 45%, transparent);
+  --danger: #ff6b6b;
+  --danger-soft: rgba(255, 107, 107, 0.12);
+}
+
+/* ---------- 1. 深空夜航 ---------- */
+[data-skin="midnight"] {
+  color-scheme: dark;
+  --bg-base: #0a0c14;
+  --bg-1: #090b14;
+  --bg-2: #151a2e;
+  --glow-1: rgba(108, 140, 255, 0.30);
+  --glow-2: rgba(160, 107, 255, 0.22);
+  --panel: rgba(16, 20, 34, 0.62);
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-hover: rgba(255, 255, 255, 0.085);
+  --surface-strong: rgba(20, 24, 40, 0.95);
+  --surface-solid: #151a2a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #eef1fb;
+  --dim: #a6aecb;
+  --mute: #6d769a;
+  --accent: #6c8cff;
+  --accent-2: #a678ff;
+  --on-accent: #ffffff;
+  --icon-tile: rgba(255, 255, 255, 0.93);
+  --shadow-color: rgba(0, 0, 0, 0.55);
+  --scrim: rgba(5, 7, 14, 0.5);
+  --radius-lg: 20px;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --bg-preview: radial-gradient(circle at 25% 15%, #2b3570, transparent 62%),
+                radial-gradient(circle at 80% 85%, #4a2f7a, transparent 60%),
+                linear-gradient(150deg, #090b14, #161c33 65%, #2a2450);
+}
+
+/* ---------- 2. 石墨极简 ---------- */
+[data-skin="graphite"] {
+  color-scheme: dark;
+  --bg-base: #101114;
+  --bg-1: #0e0f12;
+  --bg-2: #1a1c21;
+  --glow-1: rgba(255, 255, 255, 0.07);
+  --glow-2: rgba(140, 160, 190, 0.10);
+  --panel: rgba(19, 20, 24, 0.72);
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(255, 255, 255, 0.09);
+  --surface-strong: rgba(24, 25, 30, 0.96);
+  --surface-solid: #1a1b20;
+  --border: rgba(255, 255, 255, 0.075);
+  --border-strong: rgba(255, 255, 255, 0.145);
+  --text: #eceef1;
+  --dim: #a8adb7;
+  --mute: #71767f;
+  --accent: #c8d0dc;
+  --accent-2: #8c95a3;
+  --on-accent: #14151a;
+  --icon-tile: rgba(255, 255, 255, 0.94);
+  --shadow-color: rgba(0, 0, 0, 0.55);
+  --scrim: rgba(8, 9, 11, 0.55);
+  --radius-lg: 16px;
+  --radius: 11px;
+  --radius-sm: 8px;
+  --bg-preview: radial-gradient(circle at 70% 15%, #34373e, transparent 60%),
+                linear-gradient(150deg, #0d0e11, #1b1d22 70%, #2c2f36);
+}
+
+/* ---------- 3. 极光森林 ---------- */
+[data-skin="aurora"] {
+  color-scheme: dark;
+  --bg-base: #04100e;
+  --bg-1: #04110f;
+  --bg-2: #0c2420;
+  --glow-1: rgba(61, 220, 151, 0.26);
+  --glow-2: rgba(84, 129, 255, 0.20);
+  --panel: rgba(9, 26, 23, 0.62);
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(61, 220, 151, 0.09);
+  --surface-strong: rgba(11, 30, 27, 0.95);
+  --surface-solid: #0b1e1b;
+  --border: rgba(163, 255, 216, 0.10);
+  --border-strong: rgba(163, 255, 216, 0.2);
+  --text: #e6fff5;
+  --dim: #94bfb0;
+  --mute: #5f8a7c;
+  --accent: #3ddc97;
+  --accent-2: #5ec8ff;
+  --on-accent: #05130f;
+  --icon-tile: rgba(255, 255, 255, 0.93);
+  --shadow-color: rgba(0, 10, 8, 0.6);
+  --scrim: rgba(2, 10, 8, 0.52);
+  --radius-lg: 22px;
+  --radius: 15px;
+  --radius-sm: 11px;
+  --bg-preview: radial-gradient(circle at 20% 20%, #0f6b51, transparent 58%),
+                radial-gradient(circle at 85% 80%, #1a3f86, transparent 62%),
+                linear-gradient(150deg, #04100e, #0a2320 70%, #12352b);
+}
+
+/* ---------- 4. 深海 ---------- */
+[data-skin="ocean"] {
+  color-scheme: dark;
+  --bg-base: #05121f;
+  --bg-1: #061423;
+  --bg-2: #0d2b45;
+  --glow-1: rgba(69, 184, 255, 0.26);
+  --glow-2: rgba(53, 224, 200, 0.18);
+  --panel: rgba(10, 27, 43, 0.62);
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(69, 184, 255, 0.10);
+  --surface-strong: rgba(11, 30, 48, 0.95);
+  --surface-solid: #0b1e30;
+  --border: rgba(140, 210, 255, 0.12);
+  --border-strong: rgba(140, 210, 255, 0.24);
+  --text: #e8f6ff;
+  --dim: #93b5cd;
+  --mute: #5d7f97;
+  --accent: #45b8ff;
+  --accent-2: #35e0c8;
+  --on-accent: #04121d;
+  --icon-tile: rgba(255, 255, 255, 0.93);
+  --shadow-color: rgba(0, 8, 16, 0.6);
+  --scrim: rgba(3, 12, 21, 0.52);
+  --radius-lg: 18px;
+  --radius: 13px;
+  --radius-sm: 9px;
+  --bg-preview: radial-gradient(circle at 75% 20%, #14618f, transparent 60%),
+                radial-gradient(circle at 20% 85%, #0e6b64, transparent 60%),
+                linear-gradient(150deg, #05121f, #0a2438 65%, #10405c);
+}
+
+/* ---------- 5. 樱花微光 ---------- */
+[data-skin="sakura"] {
+  color-scheme: light;
+  --bg-base: #fdf4f7;
+  --bg-1: #fff8fa;
+  --bg-2: #ffe6ef;
+  --glow-1: rgba(244, 114, 182, 0.24);
+  --glow-2: rgba(251, 191, 36, 0.16);
+  --panel: rgba(255, 255, 255, 0.62);
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-hover: rgba(255, 255, 255, 0.96);
+  --surface-strong: rgba(255, 252, 253, 0.97);
+  --surface-solid: #fffafc;
+  --border: rgba(196, 122, 154, 0.22);
+  --border-strong: rgba(196, 122, 154, 0.36);
+  --text: #43242f;
+  --dim: #8a6373;
+  --mute: #b3929f;
+  --accent: #ec6ba8;
+  --accent-2: #c98bff;
+  --on-accent: #ffffff;
+  --icon-tile: #ffffff;
+  --shadow-color: rgba(150, 90, 120, 0.22);
+  --scrim: rgba(120, 70, 95, 0.22);
+  --radius-lg: 24px;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --bg-preview: radial-gradient(circle at 20% 15%, #ffd3e4, transparent 62%),
+                radial-gradient(circle at 82% 82%, #ffe9c9, transparent 60%),
+                linear-gradient(150deg, #fff9fb, #ffe9f1 65%, #ffdce9);
+}
+
+/* ---------- 6. 霜白 ---------- */
+[data-skin="frost"] {
+  color-scheme: light;
+  --bg-base: #eef3fa;
+  --bg-1: #f5f9ff;
+  --bg-2: #e2ecf9;
+  --glow-1: rgba(79, 124, 255, 0.18);
+  --glow-2: rgba(120, 220, 220, 0.18);
+  --panel: rgba(255, 255, 255, 0.62);
+  --surface: rgba(255, 255, 255, 0.7);
+  --surface-hover: rgba(255, 255, 255, 0.98);
+  --surface-strong: rgba(252, 254, 255, 0.97);
+  --surface-solid: #ffffff;
+  --border: rgba(60, 95, 150, 0.18);
+  --border-strong: rgba(60, 95, 150, 0.3);
+  --text: #17243a;
+  --dim: #5c7089;
+  --mute: #8d9db1;
+  --accent: #4f7cff;
+  --accent-2: #48c6d8;
+  --on-accent: #ffffff;
+  --icon-tile: #ffffff;
+  --shadow-color: rgba(64, 93, 140, 0.18);
+  --scrim: rgba(40, 65, 100, 0.2);
+  --radius-lg: 20px;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --bg-preview: radial-gradient(circle at 78% 12%, #cfe0ff, transparent 60%),
+                radial-gradient(circle at 15% 88%, #cbf0f2, transparent 58%),
+                linear-gradient(150deg, #f7fbff, #e6f0fc 65%, #dbe8f8);
+}
+
+/* ---------- 7. 暖纸 ---------- */
+[data-skin="paper"] {
+  color-scheme: light;
+  --bg-base: #f4eee2;
+  --bg-1: #faf5eb;
+  --bg-2: #ebdfcb;
+  --glow-1: rgba(196, 128, 64, 0.20);
+  --glow-2: rgba(140, 160, 110, 0.18);
+  --panel: rgba(255, 251, 243, 0.66);
+  --surface: rgba(255, 252, 246, 0.72);
+  --surface-hover: #fffdf8;
+  --surface-strong: rgba(255, 252, 245, 0.98);
+  --surface-solid: #fffcf5;
+  --border: rgba(122, 95, 62, 0.2);
+  --border-strong: rgba(122, 95, 62, 0.34);
+  --text: #352a1d;
+  --dim: #7d6a52;
+  --mute: #a3907a;
+  --accent: #b06a35;
+  --accent-2: #7c8f5a;
+  --on-accent: #fffaf2;
+  --icon-tile: #fffdf8;
+  --shadow-color: rgba(120, 95, 65, 0.22);
+  --scrim: rgba(90, 72, 50, 0.22);
+  --radius-lg: 18px;
+  --radius: 13px;
+  --radius-sm: 9px;
+  --bg-preview: radial-gradient(circle at 25% 20%, #f6e3c8, transparent 60%),
+                radial-gradient(circle at 85% 78%, #e8e3cb, transparent 58%),
+                linear-gradient(150deg, #fbf6ec, #f0e6d4 65%, #e6d8c1);
+}
+
+/* ---------- 8. 赛博霓虹 ---------- */
+[data-skin="cyber"] {
+  color-scheme: dark;
+  --bg-base: #04040a;
+  --bg-1: #05040b;
+  --bg-2: #140a20;
+  --glow-1: rgba(255, 43, 209, 0.26);
+  --glow-2: rgba(34, 211, 238, 0.20);
+  --panel: rgba(11, 7, 20, 0.66);
+  --surface: rgba(255, 43, 209, 0.045);
+  --surface-hover: rgba(255, 43, 209, 0.10);
+  --surface-strong: rgba(13, 8, 23, 0.96);
+  --surface-solid: #0d0817;
+  --border: rgba(255, 43, 209, 0.20);
+  --border-strong: rgba(34, 211, 238, 0.4);
+  --text: #f7ecff;
+  --dim: #b79ecb;
+  --mute: #7d6694;
+  --accent: #ff2bd1;
+  --accent-2: #22d3ee;
+  --on-accent: #10020c;
+  --icon-tile: rgba(255, 255, 255, 0.94);
+  --shadow-color: rgba(0, 0, 0, 0.7);
+  --scrim: rgba(6, 3, 12, 0.6);
+  --radius-lg: 12px;
+  --radius: 9px;
+  --radius-sm: 6px;
+  --bg-preview: radial-gradient(circle at 80% 15%, #8b1160, transparent 55%),
+                radial-gradient(circle at 15% 85%, #0b5568, transparent 58%),
+                linear-gradient(150deg, #04040a, #150a22 60%, #2a0a3a);
+}
+
+/* ---------- 9. 暗夜鎏金 ---------- */
+[data-skin="gold"] {
+  color-scheme: dark;
+  --bg-base: #0b0906;
+  --bg-1: #0c0a07;
+  --bg-2: #1d1810;
+  --glow-1: rgba(217, 180, 90, 0.22);
+  --glow-2: rgba(160, 110, 40, 0.16);
+  --panel: rgba(19, 15, 10, 0.68);
+  --surface: rgba(255, 231, 176, 0.05);
+  --surface-hover: rgba(255, 231, 176, 0.1);
+  --surface-strong: rgba(21, 17, 11, 0.96);
+  --surface-solid: #171309;
+  --border: rgba(217, 180, 90, 0.18);
+  --border-strong: rgba(217, 180, 90, 0.36);
+  --text: #f6efe0;
+  --dim: #bcac8c;
+  --mute: #8a7a5d;
+  --accent: #d9b45a;
+  --accent-2: #a97f3c;
+  --on-accent: #191307;
+  --icon-tile: rgba(255, 251, 240, 0.95);
+  --shadow-color: rgba(0, 0, 0, 0.65);
+  --scrim: rgba(8, 6, 3, 0.58);
+  --radius-lg: 17px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --bg-preview: radial-gradient(circle at 78% 18%, #6d5220, transparent 58%),
+                radial-gradient(circle at 18% 85%, #3a2a12, transparent 60%),
+                linear-gradient(150deg, #0b0906, #1a150d 65%, #2e2413);
+}
