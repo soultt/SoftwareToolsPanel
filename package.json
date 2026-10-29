@@ -1,7 +1,7 @@
 {
   "name": "software-tools-panel",
   "productName": "软件集合面板",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "软件集合面板 — 收集、整理、一键启动你的软件（已安装 / 免安装均可），支持多套皮肤",
   "main": "src/main/main.js",
   "author": "SoftwareToolsPanel",
