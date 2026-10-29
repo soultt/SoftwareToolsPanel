@@ -503,6 +503,7 @@ function registerIpc() {
     for (const key of allowed) {
       if (key in patch && patch[key] !== undefined && patch[key] !== null) a[key] = patch[key];
     }
+    if (patch.name != null) a.name = library.cleanName(patch.name, a.path);
     if (patch.path && patch.path !== a.path && fs.existsSync(patch.path)) {
       const info = library.describeFile(patch.path);
       a.target = info.target;

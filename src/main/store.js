@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { app } = require('electron');
+const { cleanName } = require('./library');
 
 const DEFAULT_GROUPS = [
   { id: 'g_common', name: '常用' },
@@ -97,7 +98,7 @@ class Store {
       .filter((a) => a && a.id && a.path)
       .map((a) => ({
         id: a.id,
-        name: a.name || path.basename(a.path).replace(/\.[^.]+$/, ''),
+        name: cleanName(a.name, a.path) || path.basename(a.path).replace(/\.[^.]+$/, ''),
         path: a.path,
         target: a.target || a.path,
         args: a.args || '',
@@ -185,7 +186,7 @@ class Store {
   addApp(entry) {
     const item = {
       id: uid(),
-      name: entry.name || '未命名',
+      name: cleanName(entry.name, entry.path) || '未命名',
       path: entry.path,
       target: entry.target || entry.path,
       args: entry.args || '',

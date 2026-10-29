@@ -77,9 +77,12 @@ function resolveUrlFile(file) {
   }
 }
 
+/* 显示名称里需要去掉的程序后缀（如 WeChat.exe -> WeChat） */
+const NAME_SUFFIX = /\.(lnk|url|appref-ms|exe|com|bat|cmd|ps1|msc|jar|vbs)$/i;
+
 function cleanName(name, fallback) {
   let n = String(name || '')
-    .replace(/\.lnk$|\.url$|\.appref-ms$/i, '')
+    .replace(NAME_SUFFIX, '')
     .replace(/\s*-\s*快捷方式$/i, '')
     .replace(/\s*快捷方式$/i, '')
     .replace(/\s*-\s*Shortcut$/i, '')
