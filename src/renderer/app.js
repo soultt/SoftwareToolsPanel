@@ -166,7 +166,6 @@ function applyTheme() {
   html.dataset.size = s.cardSize || 'md';
   html.dataset.view = s.view === 'list' ? 'list' : 'grid';
   html.dataset.anim = s.animations === false ? 'off' : 'on';
-  html.dataset.sidebar = s.sidebarCollapsed ? 'collapsed' : 'expanded';
   html.classList.toggle('acrylic', !!(s.acrylic && S.meta.isWin11));
 
   if (s.accent) html.style.setProperty('--accent', s.accent);
@@ -184,12 +183,6 @@ function applyTheme() {
 
   const icon = $('#viewModeIcon');
   if (icon) icon.setAttribute('href', s.view === 'list' ? '#i-list' : '#i-grid');
-
-  const sidebarBtn = $('#btnSidebar');
-  if (sidebarBtn) {
-    sidebarBtn.title = s.sidebarCollapsed ? '显示侧栏 (Ctrl+B)' : '隐藏侧栏 (Ctrl+B)';
-    sidebarBtn.setAttribute('aria-pressed', s.sidebarCollapsed ? 'true' : 'false');
-  }
 }
 
 /* ---------------- 数据 ---------------- */
@@ -250,7 +243,7 @@ function visibleApps() {
   return list;
 }
 
-/* ---------------- 侧栏 ---------------- */
+/* ---------------- 分组导航 ---------------- */
 function navButton({ view, icon, label, count, groupId }) {
   const btn = h('button', {
     class: `nav-item ${S.view === view ? 'active' : ''}`,
@@ -265,15 +258,10 @@ function renderNav() {
   const favCount = S.apps.filter((a) => a.favorite).length;
   navEl.innerHTML = '';
 
-  navEl.appendChild(h('div', { class: 'nav-label', html: '<span>库</span>' }));
   navEl.appendChild(navButton({ view: 'all', icon: 'i-apps', label: '全部软件', count: S.apps.length }));
   navEl.appendChild(navButton({ view: 'favorites', icon: 'i-star', label: '收藏', count: favCount }));
   navEl.appendChild(navButton({ view: 'recent', icon: 'i-clock', label: '最近启动', count: S.recent.length }));
-
-  const label = h('div', { class: 'nav-label' });
-  label.innerHTML = `<span>分组</span><button title="新建分组">${svgIcon('i-plus')}</button>`;
-  label.querySelector('button').addEventListener('click', () => promptNewGroup());
-  navEl.appendChild(label);
+  navEl.appendChild(h('div', { class: 'group-sep' }));
 
   for (const g of S.groups) {
     const count = S.apps.filter((a) => a.groupId === g.id).length;
@@ -286,12 +274,8 @@ function renderNav() {
     navEl.appendChild(btn);
   }
 
-  brandSubUpdate();
-}
-
-function brandSubUpdate() {
-  const sub = $('#brandSub');
-  if (sub) sub.textContent = S.apps.length ? `${S.apps.length} 个软件 · ${S.groups.length} 组` : 'Software Panel';
+  const active = navEl.querySelector('.nav-item.active');
+  if (active) active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 
 function navTitle() {
@@ -395,7 +379,7 @@ function updateStatus() {
   if (S.query.trim()) left.textContent = '按 Esc 清空搜索';
   else if (S.view === 'recent') left.textContent = '按启动时间倒序排列，最多显示 30 条记录';
   else if (S.view === 'favorites') left.textContent = '右键卡片可以取消收藏或直接运行';
-  else if (S.view.startsWith('group:')) left.textContent = '拖动卡片可以排序，拖到左侧其他分组即可移动';
+  else if (S.view.startsWith('group:')) left.textContent = '拖动卡片可以排序，拖到上方其他分组即可移动';
   else left.textContent = '单击卡片即可启动 · 右键卡片编辑 / 移动 / 删除';
 
   const hotkey = S.settings.hotkeyEnabled ? ` · 显隐 ${prettyHotkey(S.settings.hotkey)}` : '';
@@ -1439,24 +1423,6 @@ function closeSettings() {
   drawerEl.hidden = true;
 }
 
-/* ---------------- 侧栏折叠 ---------------- */
-async function setSidebarCollapsed(collapsed) {
-  const next = !!collapsed;
-  if (!!S.settings.sidebarCollapsed === next) return;
-  S.settings.sidebarCollapsed = next;
-  applyTheme();
-  syncSettingsUI();
-  await saveSettings({ sidebarCollapsed: next });
-}
-
-function toggleSidebar() {
-  return setSidebarCollapsed(!S.settings.sidebarCollapsed);
-}
-
-async function expandSidebar() {
-  if (S.settings.sidebarCollapsed) await setSidebarCollapsed(false);
-}
-
 function buildSkinGridOnce() {
   const grid = $('#skinGrid');
   if (grid.dataset.built === '1') return;
@@ -1534,7 +1500,6 @@ function syncSettingsUI() {
     if (el) el.checked = !!value;
   };
   setCheck('setShowPath', s.showPath !== false);
-  setCheck('setSidebar', s.sidebarCollapsed);
   setCheck('setAnim', s.animations !== false);
   setCheck('setTop', s.alwaysOnTop);
   setCheck('setTray', s.closeToTray);
@@ -1559,21 +1524,12 @@ function syncSettingsUI() {
 
 function bindSettingsEvents() {
   $('#drawerClose').addEventListener('click', closeSettings);
-  $('#btnSettings').addEventListener('click', openSettings);
-  $('#btnScan').addEventListener('click', openScanModal);
+  $('#btnSettingsTop').addEventListener('click', () => openSettings());
+  $('#btnScanTop').addEventListener('click', () => openScanModal());
+  $('#btnNewGroup').addEventListener('click', () => promptNewGroup());
   $('#btnAdd').addEventListener('click', openAddDialog);
   $('#emptyScan').addEventListener('click', openScanModal);
   $('#emptyAdd').addEventListener('click', openAddDialog);
-
-  // 侧栏折叠 / 折叠后仍可从标题栏访问常用功能
-  $('#btnSidebar').addEventListener('click', toggleSidebar);
-  $('#btnScanTop').addEventListener('click', () => openScanModal());
-  $('#btnSettingsTop').addEventListener('click', () => openSettings());
-  $('#btnSearchTop').addEventListener('click', async () => {
-    await expandSidebar();
-    searchEl.focus();
-    searchEl.select();
-  });
 
   // 视图切换
   $('#btnViewMode').addEventListener('click', async () => {
@@ -1626,7 +1582,6 @@ function bindSettingsEvents() {
   };
 
   bindSwitch('setShowPath', 'showPath', () => renderGrid());
-  bindSwitch('setSidebar', 'sidebarCollapsed', () => applyTheme());
   bindSwitch('setAnim', 'animations', () => applyTheme());
   bindSwitch('setTop', 'alwaysOnTop');
   bindSwitch('setTray', 'closeToTray');
@@ -1878,17 +1833,8 @@ document.addEventListener('keydown', (e) => {
 
   if (mod && (e.key === 'k' || e.key === 'K' || e.key === 'f' || e.key === 'F')) {
     e.preventDefault();
-    const focusSearch = () => {
-      searchEl.focus();
-      searchEl.select();
-    };
-    if (S.settings.sidebarCollapsed) expandSidebar().finally(focusSearch);
-    else focusSearch();
-    return;
-  }
-  if (mod && (e.key === 'b' || e.key === 'B')) {
-    e.preventDefault();
-    toggleSidebar();
+    searchEl.focus();
+    searchEl.select();
     return;
   }
   if (mod && e.key === ',') {
@@ -1902,7 +1848,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-/* ---------------- 侧栏视图切换 ---------------- */
+/* ---------------- 分组切换 ---------------- */
 navEl.addEventListener('click', (e) => {
   const item = e.target.closest('.nav-item');
   if (!item || !item.dataset.view) return;

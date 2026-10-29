@@ -50,50 +50,25 @@
   </svg>
 
   <div class="shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-logo">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7.2" height="7.2" rx="2.4" fill="currentColor" opacity=".95"/><rect x="13.8" y="3" width="7.2" height="7.2" rx="2.4" fill="currentColor" opacity=".55"/><rect x="3" y="13.8" width="7.2" height="7.2" rx="2.4" fill="currentColor" opacity=".55"/><circle cx="17.4" cy="17.4" r="3.6" fill="currentColor" opacity=".95"/></svg>
-        </div>
-        <div class="brand-text">
-          <strong>软件集合面板</strong>
-          <span id="brandSub">Software Panel</span>
-        </div>
-      </div>
-
-      <div class="search">
-        <svg class="ic"><use href="#i-search"/></svg>
-        <input id="search" type="text" placeholder="搜索软件、路径…" autocomplete="off" spellcheck="false" />
-        <kbd>Ctrl K</kbd>
-      </div>
-
-      <nav class="nav" id="nav"></nav>
-
-      <div class="side-actions">
-        <button class="side-btn" id="btnScan">
-          <svg class="ic"><use href="#i-scan"/></svg><span>扫描已安装软件</span>
-        </button>
-        <button class="side-btn" id="btnSettings">
-          <svg class="ic"><use href="#i-palette"/></svg><span>皮肤与设置</span>
-        </button>
-      </div>
-    </aside>
-
     <main class="main">
       <header class="titlebar">
-        <button class="icon-btn sidebar-toggle" id="btnSidebar" title="隐藏侧栏 (Ctrl+B)">
-          <svg class="ic"><use href="#i-chevron"/></svg>
-        </button>
+        <div class="brand-logo" title="软件集合面板">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7.2" height="7.2" rx="2.4" fill="currentColor" opacity=".95"/><rect x="13.8" y="3" width="7.2" height="7.2" rx="2.4" fill="currentColor" opacity=".55"/><rect x="3" y="13.8" width="7.2" height="7.2" rx="2.4" fill="currentColor" opacity=".55"/><circle cx="17.4" cy="17.4" r="3.6" fill="currentColor" opacity=".95"/></svg>
+        </div>
         <div class="title-meta">
           <h1 id="viewTitle">全部软件</h1>
           <span class="count" id="viewCount">0</span>
         </div>
+
+        <div class="search top">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input id="search" type="text" placeholder="搜索软件、路径…" autocomplete="off" spellcheck="false" />
+          <kbd>Ctrl K</kbd>
+        </div>
+
         <div class="title-actions">
-          <div class="top-quick">
-            <button class="icon-btn" id="btnSearchTop" title="搜索 (Ctrl+K)"><svg class="ic"><use href="#i-search"/></svg></button>
-            <button class="icon-btn" id="btnScanTop" title="扫描开始菜单"><svg class="ic"><use href="#i-scan"/></svg></button>
-            <button class="icon-btn" id="btnSettingsTop" title="皮肤与设置 (Ctrl+,)"><svg class="ic"><use href="#i-palette"/></svg></button>
-          </div>
+          <button class="icon-btn" id="btnScanTop" title="扫描开始菜单"><svg class="ic"><use href="#i-scan"/></svg></button>
+          <button class="icon-btn" id="btnSettingsTop" title="皮肤与设置 (Ctrl+,)"><svg class="ic"><use href="#i-palette"/></svg></button>
           <div class="seg mini" id="sizeSeg" title="卡片大小">
             <button data-size="sm">小</button>
             <button data-size="md">中</button>
@@ -112,6 +87,11 @@
           <button class="win-btn danger" data-win="close" title="关闭"><svg><use href="#i-close"/></svg></button>
         </div>
       </header>
+
+      <div class="groupbar">
+        <div class="group-tabs" id="nav"></div>
+        <button class="group-add" id="btnNewGroup" title="新建分组"><svg class="ic"><use href="#i-plus"/></svg></button>
+      </div>
 
       <div class="scroll" id="scroll">
         <div class="grid" id="grid"></div>
@@ -192,10 +172,6 @@
         <div class="setting-row">
           <div class="setting-label"><span>显示路径</span><em>在卡片上显示程序位置</em></div>
           <label class="switch"><input type="checkbox" id="setShowPath" /><i></i></label>
-        </div>
-        <div class="setting-row">
-          <div class="setting-label"><span>折叠侧栏</span><em>隐藏左侧菜单，给卡片留出更多空间</em></div>
-          <label class="switch"><input type="checkbox" id="setSidebar" /><i></i></label>
         </div>
         <div class="setting-row">
           <div class="setting-label"><span>动效</span><em>卡片入场与悬浮过渡</em></div>

@@ -31,7 +31,6 @@ const DEFAULT_SETTINGS = {
   hotkeyEnabled: true,
   hotkey: 'Control+Alt+Space',
   lastView: 'all',
-  sidebarCollapsed: false,
   groupByHeader: true
 };
 

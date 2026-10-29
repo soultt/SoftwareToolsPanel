@@ -178,7 +178,7 @@ async function main() {
   await shot(win, '05-menu');
 
   // 扫描开始菜单弹窗
-  await win.webContents.executeJavaScript(`closeMenu(); document.querySelector('#btnScan').click();`);
+  await win.webContents.executeJavaScript(`closeMenu(); document.querySelector('#btnScanTop').click();`);
   await sleep(3500);
   await shot(win, '06-scan');
 
