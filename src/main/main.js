@@ -32,6 +32,9 @@ let tray = null;
 let quitting = false;
 let wallpaperCache = { file: '', dataUrl: '' };
 
+// 开机自启时带 --hidden：只建窗口与托盘，不弹出主面板
+let hiddenLaunch = process.argv.includes('--hidden');
+
 /* ------------------------------------------------------------------ */
 /* 窗口                                                                */
 /* ------------------------------------------------------------------ */
@@ -66,7 +69,8 @@ function createWindow() {
   win.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
 
   win.once('ready-to-show', () => {
-    win.show();
+    if (!hiddenLaunch) win.show();
+    hiddenLaunch = false; // 仅对本次启动生效，之后显隐都走托盘 / 快捷键
     if (process.argv.includes('--dev')) win.webContents.openDevTools({ mode: 'detach' });
     setTimeout(() => upgradeIconsSoon(), 1200);
   });
@@ -113,6 +117,7 @@ function send(channel, payload) {
 
 function showWindow() {
   if (!win) {
+    hiddenLaunch = false;
     createWindow();
     return;
   }
@@ -203,7 +208,7 @@ function applyAutoLaunch() {
     app.setLoginItemSettings({
       openAtLogin: !!store.settings.autoLaunch,
       path: process.execPath,
-      args: app.isPackaged ? [] : [path.resolve(__dirname, '..', '..')]
+      args: app.isPackaged ? ['--hidden'] : [path.resolve(__dirname, '..', '..'), '--hidden']
     });
   } catch (err) {
     console.warn('设置开机自启失败:', err.message);
