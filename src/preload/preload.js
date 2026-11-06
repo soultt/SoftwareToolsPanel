@@ -44,6 +44,11 @@ contextBridge.exposeInMainWorld('api', {
     }
   },
 
+  system: {
+    shutdown: () => invoke('system:shutdown'),
+    restart: () => invoke('system:restart')
+  },
+
   on: (channel, cb) => {
     const allowed = new Set(['ui:open-scan', 'ui:open-settings', 'icons:updated']);
     if (!allowed.has(channel)) return () => {};

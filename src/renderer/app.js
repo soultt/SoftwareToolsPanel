@@ -1722,6 +1722,42 @@ function bindChrome() {
     const use = $('#maxIcon use');
     if (use) use.setAttribute('href', maximized ? '#i-restore' : '#i-max');
   });
+
+  // 电源按钮
+  const powerSeg = $('#powerSeg');
+  if (powerSeg) {
+    powerSeg.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-act]');
+      if (!btn) return;
+      e.stopPropagation();
+      const act = btn.dataset.act;
+      if (act === 'shutdown') {
+        confirmDialog({
+          title: '真的要关机吗？',
+          message: '所有未保存的工作将会丢失。',
+          confirmText: '立即关机',
+          cancelText: '取消',
+          danger: true,
+          icon: 'i-shutdown',
+          onOk: async () => {
+            await api.system.shutdown();
+          }
+        });
+      } else if (act === 'restart') {
+        confirmDialog({
+          title: '真的要重启吗？',
+          message: '所有未保存的工作将会丢失。',
+          confirmText: '立即重启',
+          cancelText: '取消',
+          danger: true,
+          icon: 'i-reboot',
+          onOk: async () => {
+            await api.system.restart();
+          }
+        });
+      }
+    });
+  }
 }
 
 /* ---------------- 全局快捷键：监听键盘录入 ---------------- */

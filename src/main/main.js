@@ -4,6 +4,7 @@ const { app, BrowserWindow, ipcMain, dialog, shell, Tray, Menu, globalShortcut, 
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const { exec } = require('child_process');
 
 app.setName('SoftwareToolsPanel');
 app.setAppUserModelId('com.softwaretoolspanel.app');
@@ -124,6 +125,10 @@ function showWindow() {
   if (win.isMinimized()) win.restore();
   win.show();
   win.focus();
+  // 显示窗口时应用隐藏任务栏设置
+  if (store.settings.hideTaskbar) {
+    applyHideTaskbar(true);
+  }
 }
 
 function debounce(fn, wait) {
@@ -182,6 +187,8 @@ function createTray() {
       if (win.isVisible() && win.isFocused()) win.hide();
       else showWindow();
     });
+  // 托盘菜单点击隐藏面板时也需要恢复任务栏
+  // win.on('hide') 已经会处理
   } catch (err) {
     console.error('创建托盘图标失败:', err);
   }
@@ -799,6 +806,32 @@ function registerIpc() {
     if (!win) return;
     if (store.settings.closeToTray) win.hide();
     else win.close();
+  });
+
+  /* ---------- 电源操作 ---------- */
+  ipcMain.handle('system:shutdown', async () => {
+    if (process.platform === 'win32') {
+      exec('shutdown /s /t 0', (err) => {
+        if (err) console.error('关机失败:', err);
+      });
+    } else if (process.platform === 'darwin') {
+      exec('sudo shutdown -h now');
+    } else {
+      exec('shutdown -h now');
+    }
+    return true;
+  });
+  ipcMain.handle('system:restart', async () => {
+    if (process.platform === 'win32') {
+      exec('shutdown /r /t 0', (err) => {
+        if (err) console.error('重启失败:', err);
+      });
+    } else if (process.platform === 'darwin') {
+      exec('sudo shutdown -r now');
+    } else {
+      exec('shutdown -r now');
+    }
+    return true;
   });
 }
 

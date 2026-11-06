@@ -1456,3 +1456,29 @@ input[type="color"]::-webkit-color-swatch { border: 1px solid var(--border-stron
   .title-meta h1 { max-width: 130px; font-size: 16px; }
   .titlebar .search { margin: 0 2px; }
 }
+
+/* ---------- 电源按钮 ---------- */
+#powerSeg {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+#powerSeg button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--dim);
+  cursor: pointer;
+}
+#powerSeg button:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+#powerSeg button:hover .ic { color: var(--danger); }
